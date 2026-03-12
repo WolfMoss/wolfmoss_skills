@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh api:*)",
+      "Bash(gh:*)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:pypi.org)",
+      "Bash(pip install:*)",
+      "Bash(playwright install:*)",
+      "Bash(python:*)",
+      "Bash(pip show:*)"
+    ]
+  }
+}
