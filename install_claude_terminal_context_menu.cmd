@@ -1,10 +1,12 @@
 @echo off
+:: 强制使用系统 cmd.exe，避免被 Cmder/ConEmu 劫持
+set "COMSPEC=%SystemRoot%\System32\cmd.exe"
 chcp 65001 >nul 2>&1
 echo 正在添加右键菜单"在终端打开 Claude"...
 
 reg add "HKCR\Directory\Background\shell\OpenClaudeTerminal" /ve /t REG_SZ /d "在终端打开 Claude" /f >nul
 reg add "HKCR\Directory\Background\shell\OpenClaudeTerminal" /v Icon /t REG_SZ /d "wt.exe" /f >nul
-reg add "HKCR\Directory\Background\shell\OpenClaudeTerminal\command" /ve /t REG_SZ /d "wt.exe -d \"%%V\" claude --dangerously-skip-permissions" /f >nul
+reg add "HKCR\Directory\Background\shell\OpenClaudeTerminal\command" /ve /t REG_SZ /d "wt.exe -d \"%%V\" D:\nodejs\node.exe C:\Users\Administrator\AppData\Roaming\npm\node_modules\@anthropic-ai\claude-code\cli.js --dangerously-skip-permissions" /f >nul
 
 if %ERRORLEVEL% EQU 0 (
     echo 安装成功！

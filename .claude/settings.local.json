@@ -10,7 +10,15 @@
       "Bash(pip install:*)",
       "Bash(playwright install:*)",
       "Bash(python:*)",
-      "Bash(pip show:*)"
+      "Bash(pip show:*)",
+      "Bash(cd:*)",
+      "Bash(D:\\\\codes\\\\wolfmoss_skills\\\\uninstall_claude_context_menu.cmd)",
+      "Bash(cmd.exe /c \"cd /d D:\\\\codes\\\\wolfmoss_skills && uninstall_claude_context_menu.cmd\")",
+      "Bash(reg delete:*)",
+      "Bash(cmd.exe /c \"reg delete \\\\\"HKEY_CLASSES_ROOT\\\\Directory\\\\Background\\\\shell\\\\OpenClaude\\\\\" /f\")",
+      "Bash(reg query:*)",
+      "Bash(powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"Remove-Item -Path 'HKCR:\\\\\\\\Directory\\\\\\\\Background\\\\\\\\shell\\\\\\\\OpenClaude' -Recurse -Force\")",
+      "Bash(powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"Remove-Item -Path 'Registry::HKEY_CLASSES_ROOT\\\\Directory\\\\Background\\\\shell\\\\OpenClaude' -Recurse -Force\")"
     ]
   }
 }
