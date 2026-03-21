@@ -1,4 +1,4 @@
 - Always respond in 中文
 - 所有文件都用linux换行格式（LF）
-- 开发之前触发quality-inspection-goal-extractor这个skill，明确质检目标供后续的quality-inspection-engineer skill使用
-- 交付开发任务之前必须触发quality-inspection-engineer skill，如果质检没有通过就要继续开发任务直到质检通过
+- 开发之前根据用户的需求描述自动判断质检目标，以供交付前质检使用
+- 交付开发任务之前必须根据质检目标质检，没有通过就要继续开发任务直到质检通过
