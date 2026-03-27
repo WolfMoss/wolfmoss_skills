@@ -1,0 +1,7 @@
+interface:
+  display_name: "Development Log Updater"
+  short_description: "Update the root dev log after coding tasks."
+  default_prompt: "Use $development-log-updater to complete the coding task and update the project root development log."
+
+policy:
+  allow_implicit_invocation: true
