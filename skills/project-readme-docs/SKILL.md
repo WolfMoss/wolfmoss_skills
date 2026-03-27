@@ -1,123 +1,150 @@
 ---
 name: project-readme-docs
-description: Creates and updates project root README with architecture overview and per-file logic so strangers or AI can understand the project at a glance. Use when creating a new project, after adding or modifying code files, or when the user asks to document or explain the project.
+description: Creates or updates the project root README.md so strangers or AI can understand the project quickly. Use when the user asks to write/update README, document or explain the project, create onboarding docs, or when code structure has materially changed and README should be kept in sync.
 ---
 
-# 项目 README 自动创建与更新
+# Project README Docs
 
-## 何时执行
+Create or update the project root `README.md` so a new reader can understand the project at a glance.
 
-在以下情况创建或更新项目根目录的 `README.md`：
+## When to use
 
-1. **新建项目**：完成项目骨架或首批代码后
-2. **修改代码后**：新增、删除、重命名或显著改动代码文件后
-3. **用户明确要求**：用户说「写 README」「更新文档」「让 AI/别人能看懂项目」等
+Use this skill when any of the following is true:
 
-## 目标
+1. The user explicitly asks to write or update `README.md`.
+2. The user asks to document, explain, onboard, or summarize the project for other people or AI.
+3. A task creates a new project or establishes its initial structure.
+4. A task materially changes the codebase structure and the README should stay in sync.
 
-README 要让**陌生人或 AI** 一眼读懂：
+Important:
 
-- 项目是做什么的
-- 整体架构与数据流
-- 每个目录/代码文件的大致职责与逻辑
+- This skill is not an automatic event hook.
+- It triggers when the current user request clearly implies README or project documentation work, or when the skill is explicitly named.
+- If the user is only asking for a code change and does not ask for docs, you may skip this skill unless README drift would obviously be harmful.
 
-## 执行步骤
+## Goal
 
-### 1. 收集信息
+The README should let a stranger quickly understand:
 
-- 列出项目根目录及主要子目录结构
-- 识别所有**代码文件**（如 `.py`、`.ts`、`.js` 等，排除 `__pycache__`、`node_modules`、`.git` 等）
-- 阅读入口文件（如 `main.py`、`run_*.py`、`app.js`）、配置与核心模块，理解：
-  - 入口与调用链
-  - 配置/数据从哪里来、到哪里去
-  - 各模块之间的依赖关系
+- what the project does
+- the main architecture and data flow
+- what each important directory or file is responsible for
+- how to run the project
 
-### 2. 归纳架构
+## Workflow
 
-用简短文字描述：
+### 1. Inspect the project
 
-- **项目用途**：一句话说明项目做什么
-- **整体架构**：分层或模块划分（如：数据层 / 策略层 / 回测引擎 / 报告）
-- **数据流**：从输入（配置、数据文件）到输出（结果、报告）的主流程
-- **技术栈**：主要语言、框架、关键依赖（可简要列出）
+- Identify the project root.
+- List the main directories and important files.
+- Read the entry points, configuration, and core modules.
+- Ignore generated or vendor directories such as `node_modules`, `.git`, `.next`, `dist`, `build`, `coverage`, `__pycache__`, and virtual environments unless they are directly relevant.
 
-### 3. 按文件/模块写说明
+Focus on:
 
-对每个**有逻辑的代码文件**（可合并纯转发/空实现的 `__init__.py` 等）写一段说明，包含：
+- where execution starts
+- how modules depend on each other
+- where configuration comes from
+- what inputs and outputs exist
 
-- **路径**：相对项目根的路径
-- **职责**：该文件负责什么
-- **主要逻辑**：关键函数/类、流程要点（3–5 句即可，不必逐行）
+### 2. Summarize the architecture
 
-优先写：入口脚本、核心引擎、策略、数据加载、配置、报告生成等。
+Capture, in short and concrete language:
 
-### 4. 编写 README.md
+- project purpose
+- major layers or modules
+- request or data flow
+- key technologies and dependencies
 
-在**项目根目录**创建或覆盖 `README.md`，使用下面模板，并保持 LF 换行。
+### 3. Document important files
 
-## README 模板
+For each meaningful code file or module, write a short description with:
+
+- relative path
+- responsibility
+- main logic, classes, functions, or flow
+
+Prioritize:
+
+- entry points
+- core business logic
+- configuration
+- data loading and persistence
+- API routes or handlers
+- UI composition roots
+- background jobs, scripts, or reporting pipelines
+
+Do not waste space on trivial wrapper files unless they are important for navigation.
+
+### 4. Write or update `README.md`
+
+Create or refresh the root `README.md` with clean Markdown and concise sections.
+
+Use this structure when it fits:
 
 ```markdown
-# [项目名称]
+# Project Name
 
-## 项目概述
+## Overview
 
-[一两句话：项目做什么、解决什么问题、主要用户/场景。]
+One or two paragraphs explaining what the project does and who it is for.
 
-## 技术栈
+## Tech Stack
 
-- 语言 / 框架：[如 Python 3.12]
-- 关键依赖：[列出核心库，可与 requirements.txt 等对应]
+- Language / framework
+- Key dependencies
 
-## 架构概览
+## Architecture
 
-[一段话：整体分层或模块划分，以及它们如何配合。]
+Short explanation of the main modules and how they fit together.
 
-### 数据流
+### Data Flow
 
-[从输入到输出的主流程：例如「配置文件 + 行情数据 → 数据加载 → 指标计算 → 策略信号 → 回测引擎 → 报告输出」。]
+Short path from input to output.
 
-## 目录结构
+## Directory Structure
 
-\```
-项目根/
-├── [目录1]/        # 简要说明
-├── [目录2]/
-├── [入口或主脚本]
-└── README.md
-\```
-
-## 文件说明
-
-### [路径/模块名]
-
-- **职责**：[该文件负责什么]
-- **主要逻辑**：[关键类/函数、流程要点]
-
-### [下一个文件]
-
-...
-
-## 如何运行
-
-[常用命令：如 `python run_optimizer.py`、安装依赖方式等，尽量简短。]
+```text
+project-root/
+|-- src/
+|-- ...
+`-- README.md
 ```
 
-## 书写原则
+## File Guide
 
-- **面向陌生人**：不假设读者熟悉你的缩写或内部黑话，必要时在 README 里给一句解释
-- **面向 AI**：结构清晰、小标题明确、文件路径与职责对应，便于检索与理解
-- **简洁**：每个文件说明控制在几行内，只写「做什么」和「关键逻辑」，不贴大段代码
-- **与代码同步**：每次因「修改代码」而触发时，要重读受影响文件并更新 README 中对应段落
+### path/to/file
 
-## 不需要写进 README 的
+- Responsibility: ...
+- Main logic: ...
 
-- 第三方库的详细 API
-- 每次改动的 changelog（除非用户另有要求）
-- 已由注释/docstring 充分说明的琐碎实现细节
+## Run Locally
 
-## 小结
+Commands needed to install, start, test, or build the project.
+```
 
-1. 在「新建项目 / 修改代码 / 用户要求文档」时执行
-2. 先收集结构与入口、再归纳架构与数据流、再逐文件写职责与主要逻辑
-3. 用模板在根目录生成或更新 `README.md`，保证陌生人或 AI 能快速读懂项目
+## Writing principles
+
+- Write for a new engineer, not for someone who already knows the repo.
+- Prefer concrete responsibilities over vague descriptions.
+- Keep each file description short.
+- Keep the README synchronized with code changes that affect structure or behavior.
+- Explain internal terminology briefly if needed.
+
+## Avoid
+
+Do not include:
+
+- long API reference material copied from source
+- changelog-style noise unless the user asked for it
+- low-level implementation details that do not help navigation
+- generated files unless they matter operationally
+
+## Output standard
+
+The finished README should make it easy for a human or another agent to answer:
+
+1. What is this project?
+2. Where does the main logic live?
+3. How does data move through it?
+4. How do I run it?
