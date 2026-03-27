@@ -1,0 +1,8 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\OpenClaudeTerminal]
+@="Codex Here"
+"Icon"="C:\\Users\\Administrator\\AppData\\Local\\Microsoft\\WindowsApps\\wt.exe"
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\OpenClaudeTerminal\command]
+@="C:\\Users\\Administrator\\AppData\\Local\\Microsoft\\WindowsApps\\wt.exe -d \"%V\" C:\\Users\\Administrator\\AppData\\Roaming\\npm\\codex.cmd --yolo"
