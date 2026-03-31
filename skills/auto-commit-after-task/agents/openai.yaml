@@ -1,0 +1,7 @@
+interface:
+  display_name: "Auto Commit After Task"
+  short_description: "Commit task changes automatically when work is complete."
+  default_prompt: "Use $auto-commit-after-task after finishing the user's task to commit relevant file changes when the git worktree is not clean."
+
+policy:
+  allow_implicit_invocation: true

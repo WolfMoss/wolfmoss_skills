@@ -1,0 +1,23 @@
+## 2026-03-31 12:00
+
+- Request: 创建一个在任务完成后检查文件变更并自动提交 git 的 skill。
+- Status: completed
+- Files changed:
+  - `skills/auto-commit-after-task/SKILL.md`
+  - `skills/auto-commit-after-task/agents/openai.yaml`
+  - `DEVELOPMENT_LOG.md`
+- Changes made:
+  - Added the `auto-commit-after-task` skill with explicit end-of-task trigger wording and a guarded git commit workflow.
+  - Added agent metadata so the skill can be listed and implicitly invoked.
+  - Created the root development log and recorded this task.
+- Why:
+  - The repository needed a reusable skill that standardizes end-of-task auto-commit behavior.
+  - The workflow needed safety checks so empty worktrees, non-git directories, and unrelated changes do not cause incorrect commits.
+  - The repository did not yet have a root development log.
+- Verification:
+  - Reviewed `skills/auto-commit-after-task/SKILL.md` content after writing it.
+  - Reviewed `skills/auto-commit-after-task/agents/openai.yaml` content after writing it.
+  - Ran `git status --short` and confirmed only `DEVELOPMENT_LOG.md` and `skills/auto-commit-after-task/` are new untracked changes.
+  - Ran `git diff --stat`; it returned no output because the current changes are untracked rather than tracked modifications.
+- Remaining notes:
+  - No automatic runtime hook was added; this task created the reusable skill definition only.
