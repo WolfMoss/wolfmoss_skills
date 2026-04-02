@@ -1,0 +1,7 @@
+interface:
+  display_name: "Scrapling Page Reader"
+  short_description: "Read and extract content from a specific webpage using the local Scrapling CLI."
+  default_prompt: "Use $scrapling-page-reader to fetch a specific webpage and save the content as markdown, text, or HTML without using Scrapling MCP."
+
+policy:
+  allow_implicit_invocation: true

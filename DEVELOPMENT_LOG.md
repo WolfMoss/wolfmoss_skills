@@ -21,3 +21,31 @@
   - Ran `git diff --stat`; it returned no output because the current changes are untracked rather than tracked modifications.
 - Remaining notes:
   - No automatic runtime hook was added; this task created the reusable skill definition only.
+
+## 2026-04-02 11:56
+
+- Request: 把 Scrapling 的 CLI 页面抓取能力做成一个 skill，用于替代 MCP 方式处理“抓取某个页面并读取里面内容”的请求。
+- Status: completed
+- Files changed:
+  - `skills/scrapling-page-reader/SKILL.md`
+  - `skills/scrapling-page-reader/agents/openai.yaml`
+  - `skills/scrapling-page-reader/scripts/run_scrapling_extract.ps1`
+  - `DEVELOPMENT_LOG.md`
+- Changes made:
+  - Added the `scrapling-page-reader` skill with trigger wording focused on single-page reading and extraction instead of MCP or interactive shell usage.
+  - Added agent metadata so the skill can be surfaced and implicitly invoked for page-reading requests.
+  - Added a PowerShell wrapper script that normalizes `scrapling extract get|fetch|stealthy-fetch` usage, validates output extensions, creates output directories, and passes common selector, timeout, header, and browser options.
+  - Added a static-fetch `-NoVerify` path after local verification exposed certificate validation failures from the machine's current Scrapling/curl trust chain.
+- Why:
+  - The repository needed a reusable skill that steers agents toward local Scrapling CLI extraction instead of starting Scrapling MCP for straightforward page-reading tasks.
+  - A wrapper script reduces command-construction errors and gives future agents a stable execution path for common extraction requests.
+  - The local environment showed SSL verification failures during static fetches, so the wrapper needed an escape hatch that matches Scrapling CLI capabilities.
+- Verification:
+  - Ran `scrapling --help`, `scrapling extract --help`, `scrapling extract get --help`, `scrapling extract fetch --help`, and `scrapling extract stealthy-fetch --help` to confirm available commands and options before finalizing the skill instructions.
+  - Ran `powershell -ExecutionPolicy Bypass -File .\\skills\\scrapling-page-reader\\scripts\\run_scrapling_extract.ps1 -Url "https://example.com" -OutputFile ".\\tmp\\example.json"` and confirmed the wrapper rejects unsupported output extensions.
+  - Ran `powershell -ExecutionPolicy Bypass -File .\\skills\\scrapling-page-reader\\scripts\\run_scrapling_extract.ps1 -Url "https://example.com" -OutputFile ".\\tmp\\example.md"` and observed Scrapling fail with local SSL certificate verification errors.
+  - Updated the wrapper to support `-NoVerify`, then ran `powershell -ExecutionPolicy Bypass -File .\\skills\\scrapling-page-reader\\scripts\\run_scrapling_extract.ps1 -Url "https://example.com" -OutputFile ".\\tmp\\example.md" -NoVerify` and confirmed a successful fetch plus readable Markdown output.
+  - Removed the temporary extracted file after verification and checked `git status --short` to confirm only the new skill directory remains untracked.
+- Remaining notes:
+  - `-NoVerify` only applies to static `get` requests because that is the SSL verification control exposed by Scrapling's CLI.
+  - No automated test suite or marketplace registration was added in this task.
