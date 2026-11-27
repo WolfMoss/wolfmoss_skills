@@ -54,3 +54,9 @@
 - 新建文件时说明放置理由。
 - 保持改动最小、局部，避免大范围重构除非被明确要求。
 - 生成报告、图表、导出结果时，默认放入 `results/`（或项目已有的输出目录），并在回复中明确告知路径。
+- Always respond in 中文.
+
+  All artifacts (including plans, tasks, and walkthroughs) must be written in Chinese.
+
+- 如果不是明确指定，禁止向远程服务器或者数据库写入
+
